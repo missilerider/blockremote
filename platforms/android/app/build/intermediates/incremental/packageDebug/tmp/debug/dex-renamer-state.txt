@@ -1,0 +1,4 @@
+#Sun Nov 22 10:09:42 CET 2020
+base.0=/home/alfonso/Development/blockremote/platforms/android/app/build/intermediates/dex/debug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

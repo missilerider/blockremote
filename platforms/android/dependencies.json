@@ -1,0 +1,30 @@
+[
+    {
+        "name": "@nativescript/core",
+        "directory": "../../node_modules/@nativescript/core"
+    },
+    {
+        "name": "@nativescript/theme",
+        "directory": "../../node_modules/@nativescript/theme"
+    },
+    {
+        "name": "nativescript-barcodescanner",
+        "directory": "../../node_modules/nativescript-barcodescanner"
+    },
+    {
+        "name": "nativescript-toast",
+        "directory": "../../node_modules/nativescript-toast"
+    },
+    {
+        "name": "nativescript-ui-sidedrawer",
+        "directory": "../../node_modules/nativescript-ui-sidedrawer"
+    },
+    {
+        "name": "nativescript-vue",
+        "directory": "../../node_modules/nativescript-vue"
+    },
+    {
+        "name": "nativescript-ui-core",
+        "directory": "../../node_modules/nativescript-ui-core"
+    }
+]

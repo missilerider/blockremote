@@ -8,10 +8,14 @@
   "dependencies": {
     "@nativescript/core": "^7.0.3",
     "@nativescript/theme": "^2.3.3",
+    "axios": "^0.21.0",
+    "https": "^1.0.0",
     "nativescript-barcodescanner": "^4.0.1",
     "nativescript-toast": "^2.0.0",
     "nativescript-ui-sidedrawer": "^9.0.0",
     "nativescript-vue": "^2.8.1",
+    "ts-loader": "^8.0.11",
+    "ts-node": "^9.0.0",
     "vuex": "^3.5.1"
   },
   "devDependencies": {

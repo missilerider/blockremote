@@ -1,4 +1,0 @@
-/home/alfonso/Development/blockremote/platforms/android/app/src/main/assets/app/runtime.js
-/home/alfonso/Development/blockremote/platforms/android/app/src/main/assets/app/vendor.js
-/home/alfonso/Development/blockremote/platforms/android/app/src/main/assets/app/bundle.js
-/home/alfonso/Development/blockremote/platforms/android/app/src/main/assets/app/tns-java-classes.js

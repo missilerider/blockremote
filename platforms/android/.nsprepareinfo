@@ -1,7 +1,7 @@
 {
-	"time": "Sun Nov 22 2020 10:09:22 GMT+0100 (Central European Standard Time)",
-	"nativePlatformStatus": "3",
+	"time": "",
+	"nativePlatformStatus": "1",
 	"changesRequireBuild": true,
-	"projectFileHash": "311e29bdfa6d173ab180b0e682bd78a0c3b18d17830560b5d7d92cdd7e647638",
-	"changesRequireBuildTime": "Sun Nov 22 2020 10:09:22 GMT+0100 (Central European Standard Time)"
+	"projectFileHash": "811c1341da9684a6f14532df6880fd83bad873d77fc1c6f2ece4bcb062318957",
+	"changesRequireBuildTime": null
 }

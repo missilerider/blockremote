@@ -41,6 +41,12 @@
 <script>
 import Toast from "nativescript-toast";
 const blockbrain = require('~/user-module/blockbrain');
+const axios = require('axios');
+const https = require('https');
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 export default {
     data() {
@@ -81,6 +87,10 @@ export default {
     }, 
     methods: {
         readQrCode: function() {
+            this.captureDone = true;
+            this.processQrCode({text: "172.16.0.25|8000|1234"});
+            return;
+
             var BarcodeScanner = require("nativescript-barcodescanner").BarcodeScanner;
             var barcodescanner = new BarcodeScanner();
 
@@ -109,34 +119,7 @@ export default {
             }).then(
                 function(result) {
                     that.captureDone = true;
-                    try {
-                        let qrCode = result.text;
-
-                        let m = qrCode.match(/([^\|]+)\|([0-9]+)\|([0-9a-z]{16})/); // tron,172.16.0.4,test.asuscomm.com|8000|1234567890123456
-
-                        console.log(qrCode);
-                        console.dir(m);
-
-                        if(m) {
-                            let hosts = [ ...m[1].matchAll(/([^,]+)/g) ];
-                            for(let n = 0; n < hosts.length; n++) {
-                                if(blockbrain.register({
-                                    host: hosts[n][0], 
-                                    port: m[2], 
-                                    otp: m[3]
-                                })) {
-                                    this.host = blockbrain.host;
-                                    this.port = blockbrain.port;
-                                    this.certificate = blockbrain.certificate;
-                                    return;
-                                }
-                            }
-
-                            Toast.makeText("Could not register to server!", "long").show();
-                        }
-                    } catch(e) {
-                        console.log("Error QR: " + e.message);
-                    }
+                    this.processQrCode(result);
                 },
                 function(error) {
                     that.captureDone = true;
@@ -144,6 +127,68 @@ export default {
                 }
             );
         }, 
+
+        processQrCode: async function(result) {
+            try {
+                let qrCode = result.text;
+
+                let m = qrCode.match(/^([^\|]+)\|([0-9]+)\|([0-9A-Za-z]{4,})$/); // tron?172.16.0.4?test.asuscomm.com|8000|1234567890123456
+
+                if(m) {
+                    console.dir(m);
+                    let hosts = [ ...m[1].matchAll(/([^\?]+)/g) ];
+                    for(let n = 0; n < hosts.length; n++) {
+                        if(await this.getCertificate({
+                            host: hosts[n][0], 
+                            port: m[2], 
+                            otp: m[3]
+                        })) {
+                            console.log("getCertificate OK!!!!!");
+                        }
+/*                        if(blockbrain.register({
+                            host: hosts[n][0], 
+                            port: m[2], 
+                            otp: m[3]
+                        })) {
+                            this.host = blockbrain.host;
+                            this.port = blockbrain.port;
+                            this.certificate = blockbrain.certificate;
+                            return;
+                        }*/
+                    }
+
+                    //Toast.makeText("Could not register to server!", "long").show();
+                }
+            } catch(e) {
+                console.log("Error QR: " + e.message);
+                console.trace(e);
+            }
+        }, 
+
+        getCertificate: async function(p) {
+            let url = `https://${p.host}:${p.port}/srv/blockremote/cert?otp=${p.otp}`;
+            console.log("Voy a getcert " + url);
+            var ret = await axios.get(url, {
+                httpsAgent: httpsAgent
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    console.log("status: " + response.status);
+                    console.dir(response.headers);
+                    return response.data;
+                })
+                .catch(() => {
+                    console.log("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    return null;
+                });
+
+            console.log("Ya he getcert " + url);
+
+            //console.log("TEST: " + ret);
+            console.log(url);
+            console.log(ret);
+            return;
+        },
 
         onConnect: function() {
             blockbrain.host = this.host;

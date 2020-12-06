@@ -11,6 +11,7 @@
     "axios": "^0.21.0",
     "https": "^1.0.0",
     "nativescript-barcodescanner": "^4.0.1",
+    "nativescript-https": "^2.2.2",
     "nativescript-toast": "^2.0.0",
     "nativescript-ui-sidedrawer": "^9.0.0",
     "nativescript-vue": "^2.8.1",

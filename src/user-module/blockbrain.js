@@ -6,15 +6,18 @@ class Blockbrain {
     constructor() {
         try {
             this.certificate = "";
+            this.token = "";
             this.certificate = appSettings.getString("blockbrain.certificate") || "";
+            this.token = appSettings.getString("blockbrain.token") || "";
 
-            this.host = appSettings.getString("blockbrain.host") || "";
+            let hosts = appSettings.getString("blockbrain.host")
+            this.host = hosts ? JSON.parse(hosts) : [ ];
             this.port = appSettings.getNumber("blockbrain.port") || 0;
         } catch {
         }
 
         if(!this.host || !this.port) {
-            this.host = "";
+            this.host = [ ];
             this.port = 0;
 
             this.saveParams();
@@ -22,9 +25,10 @@ class Blockbrain {
     }
 
     saveParams() {
-        appSettings.setString("blockbrain.host", this.host);
+        appSettings.setString("blockbrain.host", JSON.stringify(this.host));
         appSettings.setNumber("blockbrain.port", this.port);
         appSettings.setString("blockbrain.certificate", this.certificate);
+        appSettings.setString("blockbrain.token", this.token);
     }
 
     getConfig() {
@@ -69,7 +73,7 @@ class Blockbrain {
 
     // Status
     isConfigured() {
-        if(!this.host || !this.port) {
+        if(this.host.length == 0 || !this.port) {
             return false;
         }
 
@@ -77,9 +81,10 @@ class Blockbrain {
     }
 
     config(params) {
-        this.host = params.host || "";
+        this.host = params.host || [];
         this.port = params.port || 0;
-        this.certificate = params.certificate;
+        this.certificate = params.certificate || "";
+        this.token = params.token || "";
 
         this.saveParams();
     }
@@ -88,6 +93,7 @@ class Blockbrain {
         params.host;
         params.port;
         this.certificate = params.certificate;
+        this.token = params.token;
 
         this.saveParams();
     }
